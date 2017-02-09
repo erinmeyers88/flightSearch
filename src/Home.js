@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
 import Search from './Search';
+import ReverseSearch from './ReverseSearch';
+
 import Results from './Results';
 
 class Home extends Component {
@@ -4996,8 +4998,9 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <Search/>
-                <Results results={this.state.searchResults[0].trips.tripOption}/>
+                {/*<Search/>*/}
+                <ReverseSearch {...this.props}/>
+                {/*<Results results={this.state.searchResults[0].trips.tripOption}/>*/}
             </div>
 
         );

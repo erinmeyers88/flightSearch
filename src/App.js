@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {Link, browserHistory} from 'react-router';
+import {browserHistory} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import KeyboardLeftArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 
@@ -34,13 +33,12 @@ const customTheme = getMuiTheme({
 });
 
 
-
 class App extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            drawer: false
+            drawer: false,
         };
     }
 
@@ -49,7 +47,6 @@ class App extends Component {
     }
 
     toggleDrawer() {
-        console.log('hi');
         this.setState({
             drawer: !this.state.drawer
         });
@@ -59,41 +56,42 @@ class App extends Component {
         browserHistory.push('/');
     }
 
-  render() {
-      let children = React.Children.map(this.props.children, function (child) {
-          return React.cloneElement(child, {
+    render() {
+        let self = this;
+        let children = React.Children.map(this.props.children, function (child) {
+            return React.cloneElement(child, {
+                online: window.navigator.onLine,
+            });
+        });
 
-          });
-      });
+        return (
+            <MuiThemeProvider muiTheme={customTheme}>
+                <div style={{height: '100vh'}}>
+                    <AppBar
+                        title="Flight Search"
+                        titleStyle={{cursor: 'pointer'}}
+                        onLeftIconButtonTouchTap={this.toggleDrawer.bind(this)}
+                        iconElementRight={<div>
+                            {/*<Link to="/add"> <IconButton><PersonAdd/></IconButton></Link>*/}
+                        </div>}
+                        onTitleTouchTap={this.goHome.bind(this)}
 
-    return (
-      <MuiThemeProvider muiTheme={customTheme}>
-          <div style={{height: '100vh'}}>
-              <AppBar
-                  title="Guestbook"
-                  titleStyle={{cursor: 'pointer'}}
-                  onLeftIconButtonTouchTap={this.toggleDrawer.bind(this)}
-                  iconElementRight={<div>
-                      <Link to="/add"> <IconButton><PersonAdd/></IconButton></Link>
-                  </div>}
-                  onTitleTouchTap={this.goHome.bind(this)}
+                    />
 
-              />
+                    <Drawer open={this.state.drawer}>
+                        <MenuItem onTouchTap={this.toggleDrawer.bind(this)} rightIcon={<KeyboardLeftArrow />}/>
+                        <MenuItem primaryText="Add Guest" rightIcon={<PersonAdd />}/>
+                        <MenuItem>Menu Item 2</MenuItem>
+                    </Drawer>
 
-              <Drawer open={this.state.drawer}>
-                  <MenuItem onTouchTap={this.toggleDrawer.bind(this)} rightIcon={<KeyboardLeftArrow />}/>
-                  <MenuItem primaryText="Add Guest" rightIcon={<PersonAdd />}/>
-                  <MenuItem>Menu Item 2</MenuItem>
-              </Drawer>
+                    <div style={{height: 'calc(100% - 64px)'}}>
+                        {children}
+                    </div>
 
-              <div style={{height: 'calc(100% - 64px)'}}>
-                  {children}
-              </div>
-
-          </div>
-      </MuiThemeProvider>
-    );
-  }
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;

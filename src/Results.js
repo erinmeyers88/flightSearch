@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardHeader} from 'material-ui/Card';
 
 class Results extends Component {
 
 
 componentWillMount() {
-console.log(this.props.results);
 }
 
 

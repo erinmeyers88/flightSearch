@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory } from 'react-router';
+import { browserHistory, Router } from 'react-router';
 import './index.css';
-import Routes from './routes';
+import routes from './routes';
 
 ReactDOM.render(
-    <Routes history={browserHistory} />,
+    <Router history={browserHistory} routes={routes} />,
   document.getElementById('root')
 );
